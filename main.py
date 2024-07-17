@@ -8,7 +8,7 @@ import pytesseract
 
 import numpy as np
 
-from analiser import addiction
+from processor import addiction
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
@@ -77,11 +77,15 @@ def save_clipboard_image():
     cropped_image = make_screenshot()
 
     if cropped_image is not None:
+        # Создаем директорию data, если она не существует
+        if not os.path.exists('data'):
+            os.makedirs('data')
+
         # Определяем имя файла для сохранения с учетом порядкового номера
         num = 1
-        while os.path.exists(f"test{num}.png"):
+        while os.path.exists(f"data/test{num}.png"):
             num += 1
-        filename = f"test{num}.png"
+        filename = f"data/test{num}.png"
 
         # Сохраняем скриншот в файл
         cv2.imwrite(filename, cropped_image)
@@ -101,6 +105,9 @@ def handle_data(chat_is_open=False):
     summ = handle(cv2.imread(saved_filename))
 
     if summ:
+        # Добавляем результат в out.txt
+        with open('data/out.txt', 'a') as f:
+            f.write(f"{saved_filename} {summ}\n")
         enter_summ(summ, chat_is_open)
     else:
         print("не найден пример")
