@@ -94,13 +94,15 @@ class TextReader:
         raw_image = self.__make_screenshot()
         crop_image = self.__crop_screenshot(raw_image)
 
+        crop_image_copy = crop_image.copy()
+
         raw_data = self.__handle(crop_image)
         proc_data = self.__raw_data_processor(raw_data)
         end_status = self.__processed_data_processor(proc_data)
         print(end_status)
 
         if self.__save_screenshots:
-            file_name = self.__save_screenshot(crop_image)
+            file_name = self.__save_screenshot(crop_image_copy)
             self.__add_result_to_file(file_name, proc_data)
 
     def run(self):
