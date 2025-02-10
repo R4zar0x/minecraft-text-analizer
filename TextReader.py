@@ -149,9 +149,9 @@ class TextReader:
     def dont_save_screenshots(self):
         self.__save_screenshots = False
 
-    def use_only_lover_letters(self):
+    def use_only_lower_letters(self):
         self.__use_only_lover_letters = True
 
-    def dont_use_only_lover_letters(self):
+    def dont_use_only_lower_letters(self):
         self.__use_only_lover_letters = False
 
